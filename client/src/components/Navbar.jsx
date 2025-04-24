@@ -1,60 +1,91 @@
 import React from 'react'
+import { useAuthStore } from '../store/authStore'
 
 function Navbar() {
-    const [open, setOpen] = React.useState(false)
+    const logIn = useAuthStore((state) => !!state.token)
+
     return (
-        <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white relative transition-all">
+<div className="navbar shadow-sm border">
+  <div className="navbar-start">
+    <div className="dropdown">
+      <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+      </div>
+      <ul
+        tabIndex={0}
+        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+        <li><a>Inicio</a></li>
+        <li><a>Productos</a></li>
+        
+        <li><a>Contacto</a></li>
+      </ul>
+    </div>
+    <a className="btn btn-ghost text-xl">Verdalia</a>
+  </div>
+  <div className="navbar-center hidden lg:flex">
+    <ul className="menu menu-horizontal px-1 text-[#4aaf8f]">
+      <li><a>Inicio</a></li>
+      <li><a>Productos</a></li>
+      <li><a>Contacto</a></li>
+    </ul>
+  </div>
+  <div className="navbar-end flex items-center gap-2">
+    <div className="dropdown dropdown-end mr-2">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
+        <div className="indicator">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /> </svg>
+          <span className="badge badge-sm indicator-item bg-[#4aaf8f]">8</span>
+        </div>
+      </div>
+      <div
+        tabIndex={0}
+        className="card card-compact dropdown-content bg-base-100 z-1 mt-3 w-52 shadow">
+        <div className="card-body">
+          <span className="text-lg font-bold">8 Items</span>
+          <span className="text-info">Subtotal: $999</span>
+          <div className="card-actions">
+            <button className="btn btn-block bg-[#4aaf8f]">View cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <input type="text" placeholder="Buscar Productos" className="input border-[#4aaf8f] w-24 hidden md:w-auto md:block focus:outline-none" />
 
-            <a href="#">
-                <img className="h-9" src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/dummyLogo/dummyLogoColored.svg" alt="dummyLogoColored" />
-            </a>
+    
 
-            {/* Desktop Menu */}
-            <div className="hidden sm:flex items-center gap-8">
-                <a href="#">Home</a>
-                <a href="#">About</a>
-                <a href="#">Contact</a>
+    {
+        logIn ? (
+            <div className="dropdown dropdown-end">
+      <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+        <div className="w-10 rounded-full">
+          <img
+            alt="Tailwind CSS Navbar component"
+            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+        </div>
+      </div>
+      <ul
+        tabIndex={0}
+        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+        <li>
+          <a className="justify-between">
+            Perfil
+            <span className="badge">New</span>
+          </a>
+        </li>
+        <li><a>Mis Ordenes</a></li>
+        <li><a>Configuracion</a></li>
+        <li><a>Cerrar Sesion</a></li>
+      </ul>
+    </div>
+        ) : (
+            <a className="btn bg-[#4aaf8f] border-none">Registrarse</a>
+        )
+    }
+  </div>
+</div>
 
-                <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-3 rounded-full">
-                    <input className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500" type="text" placeholder="Search products" />
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.836 10.615 15 14.695" stroke="#7A7B7D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path clip-rule="evenodd" d="M9.141 11.738c2.729-1.136 4.001-4.224 2.841-6.898S7.67.921 4.942 2.057C2.211 3.193.94 6.281 2.1 8.955s4.312 3.92 7.041 2.783" stroke="#7A7B7D" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                </div>
 
-                <div className="relative cursor-pointer">
-                    <svg width="18" height="18" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M.583.583h2.333l1.564 7.81a1.17 1.17 0 0 0 1.166.94h5.67a1.17 1.17 0 0 0 1.167-.94l.933-4.893H3.5m2.333 8.75a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0m6.417 0a.583.583 0 1 1-1.167 0 .583.583 0 0 1 1.167 0" stroke="#615fff" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <button className="absolute -top-2 -right-3 text-xs text-white bg-indigo-500 w-[18px] h-[18px] rounded-full">3</button>
-                </div>
 
-                <button className="cursor-pointer px-8 py-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full">
-                    Login
-                </button>
-            </div>
-
-            <button onClick={() => open ? setOpen(false) : setOpen(true)} aria-label="Menu" className="sm:hidden">
-                {/* Menu Icon SVG */}
-                <svg width="21" height="15" viewBox="0 0 21 15" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="21" height="1.5" rx=".75" fill="#426287" />
-                    <rect x="8" y="6" width="13" height="1.5" rx=".75" fill="#426287" />
-                    <rect x="6" y="13" width="15" height="1.5" rx=".75" fill="#426287" />
-                </svg>
-            </button>
-
-            {/* Mobile Menu */}
-            <div className={`${open ? 'flex' : 'hidden'} absolute top-[60px] left-0 w-full bg-white shadow-md py-4 flex-col items-start gap-2 px-5 text-sm md:hidden`}>
-                <a href="#" className="block">Home</a>
-                <a href="#" className="block">About</a>
-                <a href="#" className="block">Contact</a>
-                <button className="cursor-pointer px-6 py-2 mt-2 bg-indigo-500 hover:bg-indigo-600 transition text-white rounded-full text-sm">
-                    Login
-                </button>
-            </div>
-
-        </nav>
     )
 }
 
